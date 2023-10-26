@@ -1,0 +1,172 @@
+﻿@model PagedList.IPagedList<SmartWatchManager.Models.SmartWatch>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table > tbody > tr > td {
+        border: 1px solid #999;
+    }
+
+    .table > tbody > tr > td {
+        vertical-align: middle !important;
+        text-align: center !important;
+    }
+
+    .td, th {
+        border: 1px solid black !important;
+        text-align: center;
+    }
+
+    .table th {
+        white-space: normal !important;
+    }
+
+    .body-wrapper2 {
+    }
+
+    .wrapper-header {
+        background: #50c04e;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 24px;
+    }
+
+    .wrapper-title {
+        padding: 8px;
+    }
+
+    .image-item {
+        height: 80px !important;
+        width: 80px !important;
+    }
+
+    .search_product {
+        width: 100%;
+        display: flex !important;
+        margin: 16px 32px;
+        justify-content: flex-end;
+    }
+
+    .wrapper-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+    }
+    .sortOrder {
+        text-decoration: none !important;
+        color: #6c7293 !important;
+    }
+</style>
+
+<div class="body-wrapper2">
+
+    <div class="wrapper-header">
+        <h3 class="wrapper-title"> QUẢN LÝ SẢN PHẨM </h3>
+    </div>
+
+    @using (Html.BeginForm("Index", "SmartWatches", FormMethod.Get, new { @class = "form-inline" }))
+    {
+
+        <div class="search_product" style="width:50%">
+            <input type="Text" value="@ViewBag.Keyword" name="searchSmartWatch" placeholder="Nhập tên sản phẩm cần tìm" style="width: 100%; height: 36px;">
+            <input type="submit" class="btn btn-danger" value="Tìm sản phẩm">
+        </div>
+
+    }
+
+    @if (Session["Role"].ToString() == "Admin")
+    {
+        <button class="btn pull-left " style="float: right; background: #2ba085">
+            <i class="mdi mdi-plus" style="color: #fff"></i>
+            <a href="@Url.Action("Create", "SmartWatches")" style="color: #fff">THÊM SẢN PHẨM</a>
+        </button>
+    }
+
+    @using (Html.BeginForm("Index", "Product", FormMethod.Get, new { @class = "form-inline" }))
+    {
+        <div>
+            Thương hiệu:
+            @Html.DropDownList("categoryID", ViewBag.Manufacturers as SelectList, "Chọn hãng")
+            <input type="submit" value="Lọc" />
+        </div>
+    }
+
+
+    <div class="content-table">
+        <table class="table">
+            <tr>
+                <th>
+                    Ảnh
+                </th>
+                <th>
+                    Tên sản phẩm
+                </th>
+
+                <th>
+                    @Html.ActionLink("Giá", "Index", new { sortOrder = ViewBag.PriceSortParm ,@class = "sortOrder"})
+                </th>
+                <th>
+                    @Html.ActionLink("Số lượng", "Index", new { sortOrder = ViewBag.QuanlitySortParm , @class="sortOrder"})
+                </th>
+                <th>
+                    Loại sản phẩm
+                </th>
+                <th>
+                    Thao tác
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img class="image-item" src="~/Content/Image/@item.Image" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+
+                    <td>
+                        @String.Format("{0:#,##0} VNĐ", item.Price).Replace(',', '.')
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @if (Session["Role"].ToString() == "Admin")
+                        {
+                            <a href="@Url.Action("Edit", "SmartWatches", new { id = item.ProductID })" class="btn btn-success btn-icon-text">
+                                <i class="mdi mdi-table-edit" style="color: #fff"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", "SmartWatches", new { id = item.ProductID })" class="btn btn-danger btn-icon-text">
+                                <i class="mdi mdi-delete-forever" style="font-size: 16px"></i>
+                            </a>
+                        }
+
+                        <a href="@Url.Action("Details", "SmartWatches", new { id = item.ProductID })" class="btn btn-info btn-icon-text">
+                            <i class="mdi mdi-eye" style="font-size: 16px"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="wrapper-footer">
+
+        @* Phân trang *@
+        <div class="btn-group" role="group" aria-label="Basic example">
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("Index", new { page = i, searchSmartWatch = ViewBag.Keyword, category = ViewBag.category })'">@i</button>
+            }
+        </div>
+    </div>
+</div>
+

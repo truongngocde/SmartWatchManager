@@ -1,0 +1,25 @@
+﻿.form-register {
+    width: 500px;
+    margin: 60px auto;
+    border-radius: 24px;
+    background: #e9eef5;
+}
+
+.input-register {
+    padding: 12px 60px;
+}
+
+.register-title {
+    padding-top: 24px;
+    text-align: center;
+    font-weight: 600 !important;
+    font-family: cursive;
+    font-size: 28px !important;
+}
+
+.btn-submit {
+    background: #59ab6e !important;
+    border-radius: 10px;
+    text-align: center;
+    margin: 24px;
+}

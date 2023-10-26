@@ -1,0 +1,72 @@
+﻿@model SmartWatchManager.Models.Customer
+<link rel="stylesheet" type="text/css" href="~/Content/assets/css/client.css">
+
+@{
+    ViewBag.Title = "Xác nhận thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-register">
+        <p class="register-title">XÁC NHẬN THÔNG TIN</p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CustomerID)
+        <div class="form-group input-register">
+
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ và tên" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group input-register">
+
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <span class="text-danger">@ViewBag.errorEmailExists</span>
+
+
+        </div>
+
+        <div class="form-group input-register" style="display:none">
+
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Mật khẩu", type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group input-register" style="display:none">
+
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập lại mật khẩu", type = "password" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group input-register">
+
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại" } })
+            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group input-register">
+
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group input-register" style="display: flex; justify-content: space-between;">
+            <div class="btn-submit" style="background:#808080">
+                <a href="@Url.Action("Index","Cart")" class="btn">Quay về</a>
+            </div>
+            @*<a href="@Url.Action("Index","Cart")" class="btn btn-primary btn-rounded btn-fw">Quay về</a>*@
+            <div class="btn-submit">
+                <input type="submit" value="Xác nhận" class="btn" style="width: 100% !important;" />
+            </div>
+
+        </div>
+
+    </div>
+}

@@ -1,0 +1,148 @@
+﻿@model PagedList.IPagedList<SmartWatchManager.Models.Order>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table > tbody > tr > td {
+        border: 1px solid #999;
+    }
+
+    .table > tbody > tr > td {
+        vertical-align: middle !important;
+        text-align: center !important;
+    }
+
+    .td, th {
+        border: 1px solid black !important;
+        text-align: center;
+    }
+
+    .table th {
+        white-space: normal !important;
+    }
+
+    .body-wrapper2 {
+    }
+
+    .wrapper-header {
+        background: #ff6a00;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 24px;
+    }
+
+    .wrapper-title {
+        padding: 8px;
+    }
+
+    .image-item {
+        height: 80px !important;
+        width: 80px !important;
+    }
+
+    .search_product {
+        width: 100%;
+        display: flex !important;
+        margin: 16px 32px;
+        justify-content: flex-end;
+    }
+
+    .wrapper-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+    }
+
+    .sortOrder {
+        text-decoration: none !important;
+        color: #6c7293 !important;
+    }
+</style>
+<div class="body-wrapper2">
+
+    <div class="wrapper-header">
+        <h3 class="wrapper-title"> QUẢN LÝ ĐƠN HÀNG </h3>
+    </div>
+    @using (Html.BeginForm("Index", "Orders", FormMethod.Get, new { @class = "form-inline" }))
+    {
+
+        <div class="search_product" style="width:50%">
+            <input type="Text" value="@ViewBag.Keyword" name="searchOrder" placeholder="Nhập tên sản phẩm cần tìm" style="width: 100%; height: 36px;">
+            <input type="submit" class="btn btn-danger" value="Tìm sản phẩm">
+        </div>
+
+    }
+    <div class="content-table">
+        <table class="table">
+            <tr>
+                <th>
+                    Đơn hàng
+                </th>
+                <th>
+                    Tên khách hàng
+                </th>
+
+                <th>
+                    Ngày đặt hàng
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Ngày giao dự kiến
+                </th>
+                <th>
+                    Thao tác
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.FullName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderStatu.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipperDate)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Orders", new { id = item.OrderID})" class="btn btn-success btn-icon-text">
+                            <i class="mdi mdi-table-edit" style="color: #fff"></i>
+                        </a>
+                        @*<a href="@Url.Action("Delete", "Orders", new { id = item.OrderID })" class="btn btn-danger btn-icon-text">
+                                <i class="mdi mdi-delete-forever" style="font-size: 16px"></i>
+                            </a>*@
+                        <a href="@Url.Action("Details", "Orders", new { id = item.OrderID })" class="btn btn-info btn-icon-text">
+                            <i class="mdi mdi-eye" style="font-size: 16px"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="wrapper-footer">
+
+        @* Phân trang *@
+        <div class="btn-group" role="group" aria-label="Basic example">
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("Index", new { page = i, searchSmartWatch = ViewBag.Keyword, category = ViewBag.category })'">@i</button>
+            }
+        </div>
+    </div>
+</div>

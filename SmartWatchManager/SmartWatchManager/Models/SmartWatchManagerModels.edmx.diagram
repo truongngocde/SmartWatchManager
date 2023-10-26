@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="045d04042bd34bfd9ecfcb64e4e610e6" Name="Diagram1">
+        <EntityTypeShape EntityType="SmartWatchManagerModel.Category" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.Contact" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.Customer" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.Order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.OrderDetail" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.OrderStatu" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.Role" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.SmartWatch" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartWatchManagerModel.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_SmartWatch_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_Order_Customer1" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_Order_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_Order_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_OrderDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_OrderDetail_SmartWatch" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartWatchManagerModel.FK_User_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

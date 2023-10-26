@@ -1,0 +1,55 @@
+﻿@model SmartWatchManager.Models.SmartWatch
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">TẠO MỚI SẢN PHẨM</h4>
+
+        @using (Html.BeginForm("Create", "SmartWatches", FormMethod.Post, new { @class = "forms-sample", enctype = "multipart/form-data" }))
+        {
+
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label>Tên sản phẩm</label>
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên sản phẩm" } })
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleSelectCategory">Loại sản phẩm</label>
+                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Tải ảnh</label>
+                @Html.TextBoxFor(model => model.Image, null, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail3">Giá</label>
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Giá" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Số lượng</label>
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Số lượng" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleTextarea1">Mô tả</label>
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Tạo mới</button>
+            <button class="btn btn-close-white" style="background-color: azure; ">
+                <a href="@Url.Action("Index", "SmartWatches")">Thoát</a>
+            </button>
+        }
+    </div>
+</div>
+
+

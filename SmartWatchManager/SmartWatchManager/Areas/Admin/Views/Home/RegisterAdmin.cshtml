@@ -1,0 +1,112 @@
+﻿
+@model SmartWatchManager.Models.User
+<link rel="stylesheet" type="text/css" href="~/Content/assets/css/client.css">
+@{
+    ViewBag.Title = "RegisterAdmin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-register {
+        background: #198754;
+        width: 500px;
+        margin: 10px auto;
+        border-radius: 24px;
+        box-shadow: 2px 3px 5px 0px;
+    }
+
+    .register-title {
+        padding-top: 24px;
+        text-align: center;
+        font-weight: 600 !important;
+        font-family: cursive;
+        font-size: 28px !important;
+    }
+
+    .input-register {
+        padding: 4px 60px;
+    }
+
+    .btn-submit {
+        background: burlywood;
+        border-radius: 10px;
+        text-align: center;
+        margin: 8px 16px 28px;
+    }
+
+    .form-control {
+        background: #ffff !important;
+        color: #000 !important;
+    }
+</style>
+@if (Session["Role"].ToString() == "Admin")
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-register">
+            <p class="register-title">ĐĂNG KÝ</p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group input-register">
+                @Html.DropDownList("RoleID", null, htmlAttributes: new { @class = "form-control", placeholder = "Vai trò" })
+                @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group input-register">
+
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ và tên" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+
+            </div>
+            <div class="form-group input-register">
+
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <span class="text-danger">@ViewBag.errorEmailExists</span>
+
+            </div>
+
+            <div class="form-group input-register">
+
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Mật khẩu", type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group input-register">
+
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group input-register">
+
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group input-register">
+
+                @Html.TextBoxFor(model => model.Image, null, new { type = "file", @class = "form-control", placeholder = "Ảnh" })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group input-register">
+                <div class="btn-submit">
+                    <input type="submit" value="Đăng ký" class="btn" style="width: 100% !important;" />
+                </div>
+            </div>
+
+        </div>
+    }
+
+    <div>
+        <button class="form-group btn pull-left " style="background: #808080; margin-left: 24px">
+            <i class="fa fa-arrow-left" style="color: #fff"></i>
+            <a href="@Url.Action("Index", "Account")" style="color: #fff">Quay lại</a>
+        </button>
+    </div>
+}
+

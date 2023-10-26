@@ -1,0 +1,69 @@
+﻿@model SmartWatchManager.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="form-group" style="display: flex;">
+            <div class="col-md-4" style="display: flex; align-items: center">
+                <img src="~/Content/Admin/assets/images/faces/@Model.Image" style="width: 100%; height: 350px" />
+            </div>
+            <div class="col-md-8">
+                <div class="content-item" style="padding-top: 40px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.FullName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Role.RoleName, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.Role.RoleName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.Phone)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.Address)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-footer">
+                <div class="form-group" style=" display: flex; margin-right: 40px; align-items: flex-start; justify-content: flex-end;">
+                    <input type="submit" value="Xóa" class="btn btn-danger" style="color: #fff;" />
+                    <button class="form-group btn pull-left " style="background: #808080; margin-left: 24px">
+                        <i class="fa fa-arrow-left" style="color: #fff"></i>
+                        <a href="@Url.Action("Index", "Account")" style="color: #fff">Quay lại</a>
+                    </button>
+                    <button class="form-group btn pull-left " style="background: #1eaf2d; margin-left: 24px">
+                        <a href="@Url.Action("Edit", "Account", new { id = Model.UserID})" style="color: #fff">  Edit  </a>
+                    </button>
+                </div>
+
+
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿
+@if (Session["UserID"] != null)
+{
+    <ul class="nav">
+
+        <li class="nav-item profile">
+            <div class="profile-desc">
+                @if (Session["UserID"] != null)
+                {
+                    <div class="profile-pic">
+                        <div class="count-indicator">
+                            <img class="img-xs rounded-circle " src="~/Content/Admin/assets/images/faces/@Session["Image"].ToString()" alt="">
+                            <span class="count bg-success"></span>
+                        </div>
+                        <div class="profile-name">
+                            <h5 class="mb-0 font-weight-normal">@Session["FullName"].ToString()</h5>
+                            <span>@Session["Role"].ToString()</span>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="profile-pic" style="display: none"></div>
+                }
+
+            </div>
+        </li>
+
+        <li class="nav-item nav-category">
+            <span class="nav-link">Navigation</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "Admin" })">
+                <span class="menu-icon">
+                    <i class="mdi mdi-home"></i>
+                </span>
+                <span class="menu-title">Trang chủ</span>
+
+            </a>
+
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="@Url.Action("Index", "SmartWatches", new { area = "Admin" })">
+                <span class="menu-icon">
+                    <i class="mdi mdi-clock"></i>
+                </span>
+                <span class="menu-title">Quản lý sản phẩm</span>
+
+            </a>
+
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="@Url.Action("Index", "Orders", new { area = "Admin" })">
+                <span class="menu-icon">
+                    <i class="mdi mdi-cart"></i>
+                </span>
+                <span class="menu-title">Quản lý đơn hàng</span>
+            </a>
+        </li>
+
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="@Url.Action("Index", "Contacts", new { area = "Admin" })">
+                <span class="menu-icon">
+                    <i class="mdi mdi-comment-multiple-outline"></i>
+                </span>
+                <span class="menu-title">Phản hồi</span>
+            </a>
+        </li>
+        @if (Session["Role"].ToString() == "Admin")
+        {
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="@Url.Action("Index", "Account", new { area = "Admin"})">
+                    <span class="menu-icon">
+                        <i class="mdi mdi-security"></i>
+                    </span>
+                    <span class="menu-title">Quản lý người dùng</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="@Url.Action("Index", "Roles", new { area = "Admin"})">
+                    <span class="menu-icon">
+                        <i class="mdi mdi-security"></i>
+                    </span>
+                    <span class="menu-title">Phân quyền người dùng</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="@Url.Action("Charts", "Orders", new { area = "Admin"})">
+                    <span class="menu-icon">
+                        <i class="mdi mdi-chart-bar"></i>
+                    </span>
+                    <span class="menu-title">Thống kê</span>
+                </a>
+            </li>
+        }
+
+    </ul>
+}
+

@@ -1,0 +1,104 @@
+﻿@model SmartWatchManager.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    decimal totalBill = 0.00M;
+}
+
+<style>  
+    .table > tbody > tr > td {
+        vertical-align: middle !important;
+        text-align: center !important;
+    }
+    .td, th {
+        text-align: center;
+    }
+
+    .table th {
+        white-space: normal !important;
+    }
+</style>
+<div class="card">
+    <div class="card-body">
+        <div class="card-body">
+            <h5>Thông tin Khách hàng</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th> Mã đơn hàng </th>
+                            <th> Tên khách hàng </th>
+                            <th> Ngày đặt hàng </th>
+                            <th> Trạng thái </th>
+                            <th> Ngày giao dự kiến </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.OrderName </td>
+                            <td> @Model.Customer.FullName </td>
+                            <td> @Model.OrderDate </td>
+                            <td> @Model.OrderStatu.Name</td>
+                            <td> @Model.ShipperDate </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <h5 style="margin-top:16px;">Thông tin hóa đơn</h5>
+            <div class="table-responsive">
+                @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th> ID </th>
+                                <th> Ảnh </th>
+                                <th> Tên sản phẩm </th>
+                                <th> Giá sản phẩm</th>
+                                <th> Số lượng  </th>
+                                <th> Thành tiền </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var orderDetail in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td> @orderDetail.ID </td>
+                                    <td class="py-1">
+                                        <img src="~/Content/Image/@orderDetail.SmartWatch.Image" alt="image" />
+                                    </td>
+                                    <td>@orderDetail.SmartWatch.ProductName</td>
+                                    <td>@String.Format("{0:#,##0} VNĐ", orderDetail.SmartWatch.Price).Replace(',', '.')</td>
+                                    <td>@orderDetail.Quantity</td>
+                                    <td>
+                                        @String.Format("{0:#,##0} VNĐ", orderDetail.Quantity * orderDetail.SmartWatch.Price).Replace(',', '.')
+                                    </td>
+                                </tr>
+                                totalBill += Convert.ToDecimal(orderDetail.Quantity * orderDetail.SmartWatch.Price);
+                            }
+
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Không có sản phẩm trong đơn hàng.</p>
+                }
+                <p style=" margin-top: 16px; float: right;">Tổng tiền : @String.Format("{0:#,##0} VNĐ", totalBill).Replace(',', '.')</p>
+            </div>
+        </div>
+        <button class="form-group btn pull-left " style="background: #808080; margin-left: 24px">
+            <i class="fa fa-arrow-left" style="color: #fff"></i>
+            <a href="@Url.Action("Index", "Orders")" style="color: #fff">Quay lại</a>
+        </button>
+        <button class="form-group btn pull-left " style="background: #1eaf2d; margin-left: 24px">
+            <a href="@Url.Action("Edit", "Orders", new { id = Model.OrderID})" style="color: #fff">  Edit  </a>
+        </button>
+    </div>
+</div>
+
+       

@@ -1,0 +1,88 @@
+﻿@model SmartWatchManager.Models.AccountManager
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Quản lý người dùng</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-contextual">
+                        <thead>
+                            <tr>
+                                <th> Ảnh </th>
+                                <th> Vai trò </th>
+                                <th> Họ tên </th>
+                                <th> Email </th>
+                                <th> Điện thoại </th>
+                                <th> Địa chỉ </th>
+                                <th> Thao tác </th>
+                            </tr>
+                        </thead>
+                        <tbody style="max-height: 50vh !important; overflow-y: auto !important">
+                            @foreach (var item in Model.lstUser)
+                            {
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="~/Content/Admin/assets/images/faces/@item.Image" alt="image" />
+                                    </td>
+                                    <td> @item.Role.RoleName </td>
+                                    <td>
+                                        @item.FullName
+                                    </td>
+                                    <td> @item.Email </td>
+                                    <td> @item.Phone </td>
+                                    <td> @item.Address </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit", "Account", new { id = item.UserID })" class="btn btn-success btn-icon-text">
+                                            <i class="mdi mdi-table-edit" style="color: #fff"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete", "Account", new { id = item.UserID })" class="btn btn-danger btn-icon-text">
+                                            <i class="mdi mdi-delete-forever" style="font-size: 16px"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <a href="@Url.Action("RegisterAdmin", "Home", new { area = "Admin"})" class="btn btn-success btn-fw" style="margin-top: 24px">Đăng kí tài khoản</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Quản lý khách hàng</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> Họ và tên </th>
+                                <th> Email </th>
+                                <th> Điện thoại </th>
+                                <th> Địa chỉ </th>
+                            </tr>
+                        </thead>
+                        <tbody style="max-height: 56vh !important; overflow-y: auto !important">
+                            @foreach (var item in Model.lstCustomer)
+                            {
+                                <tr>
+                                    <td> @item.FullName </td>
+                                    <td> @item.Email </td>
+                                    <td> @item.Phone </td>
+                                    <td> @item.Address </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

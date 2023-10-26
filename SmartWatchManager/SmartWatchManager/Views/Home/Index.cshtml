@@ -1,0 +1,153 @@
+﻿@model List<SmartWatchManager.Models.SmartWatch>
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Banner Hero -->
+<div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row p-5">
+                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                        <img class="img-fluid" src="~/Content/Image/garmin2.jpg" alt="">
+                    </div>
+                    <div class="col-lg-6 mb-0 d-flex align-items-center">
+                        <div class="text-align-left align-self-center">
+                            <h1 class="h1 text-success">Huawie</h1>
+                            <h3 class="h2">Huawei Band 7 Chính Hãng</h3>
+                            <p>
+                                Huawei Band 7 ngoài việc hỗ trợ bạn xem tin nhắn, thông báo hay dự báo thời tiết,...thì thiết bị đã tạo dấu ấn riêng của mình trong lòng người dùng với khả năng đo lường các chỉ số sức khoẻ rất tốt.
+                                Vì thế mà Huawei đã cho ra đời thế hệ tiếp theo của vòng tay thông minh nhằm tối ưu hơn trải nghiệm sử dụng của bạn.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="container">
+                <div class="row p-5">
+                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                        <img class="img-fluid" src="~/Content/Image/samsung4.jpg" alt="">
+                    </div>
+                    <div class="col-lg-6 mb-0 d-flex align-items-center">
+                        <div class="text-align-left">
+                            <h1 class="h1">Samsung</h1>
+                            <h3 class="h2">Đồng hồ thông minh Amazfit GTR 2e Chính Hãng</h3>
+                            <p>
+                                Đồng hồ thông minh Amazfit GTR 2e vừa qua đã được nhà Samsung cho ra mắt người dùng.
+                                Chiếc smartwatch này kế thừa nhiều tinh hoa từ người anh tiềm nhiệm về mặt thiết kế.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="container">
+                <div class="row p-5">
+                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                        <img class="img-fluid" src="~/Content/Image/apple5.jpg" alt="">
+                    </div>
+                    <div class="col-lg-6 mb-0 d-flex align-items-center">
+                        <div class="text-align-left">
+                            <h1 class="h1">Apple Watch</h1>
+                            <h3 class="h2">Apple Watch SE 2 (2022) 40mm (GPS) Viền nhôm Chính Hãng </h3>
+                            <p>
+                                Apple Watch SE 2 (2022) GPS 40mm viền nhôm dây cao su là một trong những siêu phẩm vừa qua đã được nhà Apple cho ra mắt.
+                                Và chiếc smartwatch này cũng được nhiều người hâm mộ săn đón.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+    <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+    </a>
+</div>
+<!-- End Banner Hero -->
+<!-- Start Categories of The Month -->
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Thương hiệu nổi bật của Tháng</h1>
+            <p>
+                Chúng tôi tự hào giới thiệu các sản phẩm SmartWatch mới nhất của chúng tôi!
+                Tìm thấy chiếc đồng hồ thông minh hoàn hảo để đồng hành cùng bạn trong mọi hoạt động.
+                Từ các tính năng thể thao đến sức khỏe, công nghệ đeo tay này có tất cả những gì bạn cần để cải thiện cuộc sống của mình.
+                Xem danh mục của chúng tôi và đặt hàng ngay hôm nay!
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <a href="/ShoppingCart?category=Apple%20Watch"><img src=" ~/Content/assets/img/apple4.jpg" class="rounded-circle img-fluid border"></a>
+            <h5 class="text-center mt-3 mb-3">Apple Watch</h5>
+            <p class="text-center"><a href="/ShoppingCart?category=Apple%20Watch" class="btn btn-success">Sản phẩm</a></p>
+        </div>
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <a href="/ShoppingCart?category=Samsung"><img src=" ~/Content/assets/img/samsung3.jpg" class="rounded-circle img-fluid border"></a>
+            <h2 class="h5 text-center mt-3 mb-3">SamSung</h2>
+            <p class="text-center"><a href="/ShoppingCart?category=Samsung" class="btn btn-success">Sản phẩm</a></p>
+        </div>
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <a href="/ShoppingCart?category=Huawie"><img src=" ~/Content/assets/img/huawei2.jpg" class="rounded-circle img-fluid border"></a>
+            <h2 class="h5 text-center mt-3 mb-3">Huawie</h2>
+            <p class="text-center"><a href="/ShoppingCart?category=Huawie" class="btn btn-success">Sản phẩm</a></p>
+        </div>
+    </div>
+</section>
+<!-- End Categories of The Month -->
+<!-- Start Featured Product -->
+<section class="bg-light">
+    <div class="container py-5">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Sản phẩm Nổi bật</h1>
+                <p>
+                    Bạn đang tìm kiếm một chiếc đồng hồ thông minh với nhiều tính năng đặc biệt?
+                    Sản phẩm nổi bật của chúng tôi có đầy đủ những tính năng mà bạn cần, từ theo dõi sức khỏe đến gọi và nhận cuộc gọi.
+                    Với thiết kế thời trang và công nghệ tiên tiến, chiếc đồng hồ thông minh này sẽ là đồng hành hoàn hảo của bạn trong mọi hoạt động.
+                    Xem chi tiết sản phẩm và đặt hàng ngay hôm nay để trải nghiệm sự tiện dụng và tuyệt vời của nó!
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Take(3))
+            {
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a href="@Url.Action("Details", "ShoppingCart", new { id = item.ProductID })">
+                            <img src="~/Content/Image/@item.Image" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+
+                            <a href="@Url.Action("Details", "ShoppingCart", new { id = item.ProductID })" class="h2 text-decoration-none text-dark">@item.Category.CategoryName</a>
+                            <p class="card-text">
+                                @item.ProductName
+                            </p>
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li style="color: #198754;">@String.Format("{0:#,##0} VNĐ", item.Price).Replace(',', '.')</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+<!-- End Featured Product -->

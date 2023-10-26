@@ -1,0 +1,50 @@
+﻿@model SmartWatchManager.Models.Order
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">SỬA THÔNG TIN SẢN PHẨM</h4>
+
+        @using (Html.BeginForm("Edit", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.OrderID)
+            <div class="form-group">
+                <label>Mã đơn hàng</label>
+                @Html.EditorFor(model => model.OrderName, new { htmlAttributes = new { @class = "form-control", placeholder = "Mã đơn hàng" } })
+                @Html.ValidationMessageFor(model => model.OrderName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail3">Tên khách hàng</label>
+                @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Ngày giao hàng</label>
+                @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ngày giao hàng" } })
+                @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleSelectCategory">Trạng thái</label>
+                @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Ngày nhận hàng</label>
+                @Html.EditorFor(model => model.ShipperDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ngày nhận hàng" } })
+                @Html.ValidationMessageFor(model => model.ShipperDate, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+            <button class="btn btn-close-white" style="background-color: azure; ">
+                <a href="@Url.Action("Index", "Orders")">Thoát</a>
+            </button>
+        }
+    </div>
+</div>
+

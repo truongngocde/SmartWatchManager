@@ -1,0 +1,51 @@
+﻿@model SmartWatchManager.Models.Contact
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5>Bạn có chắc là muốn xóa thông tin này ?</h5>
+        <div class="form-group" style="display: flex;">
+
+            <div class="col-md-8">
+                <div class="content-item" style="padding-top: 40px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.FullName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FContent, htmlAttributes: new { @class = "col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.FContent)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-footer">
+                <div class="form-group" style=" display: flex; margin-right: 40px; align-items: flex-start; justify-content: flex-end;">
+                    <input type="submit" value="Xóa" class="btn btn-danger" style="color: #fff;" />
+                    <button class="form-group btn pull-left " style="background: #808080; margin-left: 24px">
+                        <i class="fa fa-arrow-left" style="color: #fff"></i>
+                        <a href="@Url.Action("Index", "Contacts")" style="color: #fff">Quay lại</a>
+                    </button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

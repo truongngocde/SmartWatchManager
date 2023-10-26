@@ -1,0 +1,163 @@
+﻿@model IEnumerable<SmartWatchManager.Models.CartModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal TotalAmount = 0.00M;
+    int totalQuantity = 0;
+    Session["TotalAmount"] = TotalAmount;
+}
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/assets/css/cart.css" />
+<style>
+
+    .badge {
+        color: #000 !important;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".remove-product").click(function () {
+            var productId = $(this).data("product-id");
+            var model = { "Id": productId };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Remove", "Cart")',
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    $('#CartCount').text(@Session["count"] - 1);
+                    $("#product-" + productId).remove();
+
+
+                },
+                error: function () {
+                    alert("Lỗi trong khi xóa sản phẩm!");
+                }
+            });
+            return false;
+
+        });
+    });
+</script>
+
+@using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <section class="section-content padding-y">
+        <div class="container-cart">
+            <div class="row">
+                <main class="col-md-9">
+
+                    <div class="content-table">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Ảnh
+                                </th>
+                                <th>
+                                    Tên sản phẩm
+                                </th>
+
+                                <th>
+                                    Đơn giá
+                                </th>
+                                <th>
+                                    Số lượng
+                                </th>
+                                <th>
+                                    Thành tiền
+                                </th>
+                                <th>
+                                    Thao tác
+                                </th>
+
+                            </tr>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    TotalAmount += Convert.ToDecimal(item.smartWatch.Price * item.Quantity);
+                                    totalQuantity += item.Quantity;
+
+                                    <tr id="product-@item.smartWatch.ProductID">
+                                        <td>
+                                            <img class="image-item" src="~/Content/Image/@item.smartWatch.Image" style="width: 60px; height:60px" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.smartWatch.ProductName)
+                                        </td>
+
+                                        <td>
+                                            @String.Format("{0:#,##0} VNĐ", item.smartWatch.Price).Replace(',', '.')
+                                        </td>
+                                        <td>
+                                            @item.Quantity
+                                            @*<input type="hidden" value="@item.smartWatch.ProductID" id="productid" />
+                                                <input type="number" id="idQuantity" value="@item.Quantity" min="1" max="@item.smartWatch.Quantity" style="width: 60px">*@
+                                        </td>
+
+                                        <td class="text-right">
+                                            @String.Format("{0:#,##0} VNĐ", item.smartWatch.Price * item.Quantity).Replace(',', '.')
+                                        </td>
+                                        <td>
+                                            <button class="remove-product totalAmount" data-product-id="@item.smartWatch.ProductID" style="border: none">
+                                                <i class="icon text-success fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <p>Không có sản phẩm trong giỏ hàng</p>
+                            }
+
+
+                        </table>
+                        <div class="card-body border-top" style="display: flex; justify-content: space-between;">
+                            <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-danger"> <i class="fa fa-chevron-left"></i> Quay lại shop </a>
+
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Giao hàng miễn phí trong vòng 1-2 tuần</p>
+                    </div>
+
+                </main> <!-- col.// -->
+
+                <aside class="col-md-3">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <dl class="dlist-align">
+                                <dt><i class="icon text-success fa fa-coins" style="margin-right: 16px"></i>TẠM TÍNH</dt>
+
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>Số lượng</dt>
+                                <dd class="text-right">@totalQuantity sản phẩm</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>Tổng tiền:</dt>
+                                <dd class="text-right">@String.Format("{0:#,##0} VNĐ", TotalAmount).Replace(',', '.')</dd>
+                            </dl>
+                            <hr>
+                            <a href="@Url.Action("Index","Cart")" class="btn btn-primary btn-rounded btn-fw">Cập nhật</a>
+                            <a href="@if (Session["cart"] == null) { @Url.Action("Index", "ShoppingCart") } else {@Url.Action("ConfirmInfo", "Payment", new {id = Session["CustomerID"]}) } " class="btn btn-success btn-rounded btn-fw">Đặt hàng</a>
+                            @*<button type="submit" class="btn btn-success btn-rounded btn-fw" id="SaveOrder"> Đặt hàng</button>*@
+                        </div> <!-- card-body.// -->
+                    </div>  <!-- card .// -->
+                </aside> <!-- col.// -->
+
+
+            </div>
+
+        </div> <!-- container .//  -->
+    </section>
+}
+
+

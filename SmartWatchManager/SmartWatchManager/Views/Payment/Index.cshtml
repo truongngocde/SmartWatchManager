@@ -1,0 +1,126 @@
+﻿@model SmartWatchManager.Models.Order
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bill {
+        max-width: 1400px;
+        margin: 50px 100px;
+    }
+</style>
+@if (Session["CustomerID"] != null)
+{
+    <div class="bill">
+        <div class="row">
+            <div class="col-12">
+                <h2>HÓA ĐƠN ĐẶT HÀNG</h2>
+                <p>Ngày đặt hàng: @Model.OrderDate</p>
+                <p>Trạng thái: <b>@Model.OrderStatu</b></p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <h4 class="mt-3 mb-3">Thông tin Người nhận hàng</h4>
+                <table class="table" style="font-size:12px;">
+                    <tbody>
+                        <tr>
+                            <td>@Model.OrderName</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tên</td>
+                            <td>@Model.Customer.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Điện thoại</td>
+                            <td>@Model.Customer.Phone</td>
+                        </tr>
+
+                        <tr>
+                            <td>ĐC nhận hàng</td>
+                            <td>
+                                <p>
+                                    <i>@Model.Customer.Address</i>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="col-12">
+                <h4 class="mt-3 mb-3">Chi tiết đơn hàng</h4>
+                <table class="table" style="font-size:12px;">
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                1<span>.</span> Áo Thun Cổ Trụ Tối Giản M4 / NÃƒÂ¢u, XL / 0020887004
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                <span>257,000</span>
+                            </td>
+                            <td class="text-right">
+                                x 1
+                            </td>
+                            <td class="text-right">
+                                <span>-0%</span>
+                            </td>
+                            <td>
+                                <b>257,000</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>*@
+            <div class="col-12">
+                <h4 class="mt-3 mb-3">Hóa đơn</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="width: 60%; text-align:right;" class="aright">Tổng giá trị sản phẩm:</td>
+                            <td>
+                                <b>257,000</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 60%;text-align:right;" class="aright">Giảm giá:</td>
+                            <td>
+                                <b>0</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">Phí vận chuyển:</td>
+                            <td>
+                                <b>29,000</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">Tổng hóa đơn:</td>
+                            <td>
+                                <b>286,000</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">Đã thanh toán:</td>
+                            <td>
+                                <b>0</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">Phải trả:</td>
+                            <td>
+                                <b>286,000</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="@Url.Action("CheckOut","Payment")" class="btn btn-success btn-rounded btn-fw">Thanh toán</a>
+    </div>
+}
+
+

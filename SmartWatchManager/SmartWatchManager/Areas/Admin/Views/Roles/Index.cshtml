@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SmartWatchManager.Models.Role>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+        <table class="table">
+            <tr>
+
+                <th>
+                    Vai trò
+                </th>
+
+                <th>
+                    Thao tác
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr style="border: 1px solid #000">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Roles", new { id = item.RoleID })" class="btn btn-success btn-icon-text">
+                            <i class="mdi mdi-table-edit" style="color: #fff"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", "Roles", new { id = item.RoleID })" class="btn btn-danger btn-icon-text">
+                            <i class="mdi mdi-delete-forever" style="font-size: 16px"></i>
+                        </a>
+                        <a href="@Url.Action("Details", "Roles", new { id = item.RoleID })" class="btn btn-info btn-icon-text">
+                            <i class="mdi mdi-eye" style="font-size: 16px"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <button class="btn pull-left " style="float: right; background: #2ba085">
+            <i class="mdi mdi-plus" style="color: #fff"></i>
+            <a href="@Url.Action("Create", "Roles")" style="color: #fff">THÊM QUYỀN</a>
+        </button>

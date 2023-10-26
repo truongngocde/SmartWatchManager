@@ -1,0 +1,113 @@
+﻿@model IEnumerable<SmartWatchManager.Models.Contact>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table > tbody > tr > td {
+        border: 1px solid #999;
+    }
+
+    .table > tbody > tr > td {
+        vertical-align: middle !important;
+        text-align: center !important;
+    }
+
+    .td, th {
+        border: 1px solid black !important;
+        text-align: center;
+    }
+
+    .table th {
+        white-space: normal !important;
+    }
+
+    .body-wrapper2 {
+    }
+
+    .wrapper-header {
+        background: #0094ff;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 24px;
+    }
+
+    .wrapper-title {
+        padding: 8px;
+    }
+
+    .image-item {
+        height: 80px !important;
+        width: 80px !important;
+    }
+
+    .search_product {
+        width: 100%;
+        display: flex !important;
+        margin: 16px 32px;
+        justify-content: flex-end;
+    }
+
+    .wrapper-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+    }
+
+    .sortOrder {
+        text-decoration: none !important;
+        color: #6c7293 !important;
+    }
+</style>
+<div class="body-wrapper2">
+
+    <div class="wrapper-header">
+        <h3 class="wrapper-title"> PHẢN HỒI KHÁCH HÀNG </h3>
+    </div>
+    <div class="content-table">
+        <table class="table">
+            <tr>
+
+                <th>
+                    Tên khách hàng
+                </th>
+
+                <th>
+                    Email
+                </th>
+                <th>
+                    Nội dung
+                </th>
+                <th>
+                    Thao tác
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FContent)
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Delete", "Contacts", new { id = item.id })" class="btn btn-danger btn-icon-text">
+                            <i class="mdi mdi-delete-forever" style="font-size: 16px"></i>
+                        </a>                        
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>

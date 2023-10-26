@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TECHMOD</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/Admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/Admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Content/Admin/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="~/Content/Admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/Content/Admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/Content/Admin/assets/images/favicon.png" />
+    <style>
+        .content-wrapper2 {
+            background: #ffff;
+            padding: 1.875rem 1.75rem;
+            width: 100%;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+        }
+
+        .logo, .logo:hover {
+            color: #fff;
+            font-size: 28px;
+            text-decoration: none;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:~/Content/Admin/partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                @*<a class="sidebar-brand brand-logo" href="~/Content/Admin/index.html"><img src="~/Content/Admin/assets/images/logo.svg" alt="logo" /></a>
+                    <a class="sidebar-brand brand-logo-mini" href="~/Content/Admin/index.html"><img src="~/Content/Admin/assets/images/logo-mini.svg" alt="logo" /></a>*@
+                <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo"><b>TECHMOD</b></a>
+            </div>
+
+            @Html.Partial("_PartiaSideBar")
+
+
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:~/Content/Admin/partials/_navbar.html -->
+            <nav class="navbar p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+                    <a class="navbar-brand brand-logo-mini" href="~/Content/Admin/index.html"><img src="~/Content/Admin/assets/images/logo-mini.svg" alt="logo" /></a>
+                </div>
+                <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch" style="box-shadow: none !important">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item w-100">
+                            <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                                <input type="text" class="form-control" placeholder="Search products">
+                            </form>
+                        </li>
+                    </ul>
+                    @* Thông báo and profile *@
+                    <ul class="navbar-nav navbar-nav-right">
+                        @Html.Partial("_PartialRegisterAdmin")
+
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="mdi mdi-format-line-spacing"></span>
+                    </button>
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <!-- content-wrapper begin -->
+                <div class="content-wrapper2">
+                    @*<div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+
+                            </div>
+                        </div>*@
+                    @if (Session["UserID"] != null)
+                    {
+                        @RenderBody()
+                    }
+                    else {
+                        Response.Redirect("~/Home/Login");
+                    }
+
+                </div>
+                <!-- partial:~/Content/Admin/partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © truongngocde2023@gmail.com</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Đồng hồ thông minh <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">TECHMOD</a></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/Content/Admin/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/Content/Admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/Content/Admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/Content/Admin/assets/js/off-canvas.js"></script>
+    <script src="~/Content/Admin/assets/js/hoverable-collapse.js"></script>
+    <script src="~/Content/Admin/assets/js/misc.js"></script>
+    <script src="~/Content/Admin/assets/js/settings.js"></script>
+    <script src="~/Content/Admin/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/Content/Admin/assets/js/file-upload.js"></script>
+    <script src="~/Content/Admin/assets/js/typeahead.js"></script>
+    <script src="~/Content/Admin/assets/js/select2.js"></script>
+    <!-- End custom js for this page -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

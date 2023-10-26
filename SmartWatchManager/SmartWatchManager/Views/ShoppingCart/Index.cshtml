@@ -1,0 +1,171 @@
+﻿@model PagedList.IPagedList<SmartWatchManager.Models.SmartWatch>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .pagination .page-link:hover {
+        background-color: #0d6efd !important;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("[id^='addtocart_']").click(function () {
+            // Lấy thông tin sản phẩm
+            var productId = $(this).data("product-id");
+            var productName = $(this).data("product-name");
+
+
+            // Tạo model
+            var model = { "Id": productId, "Quantity": 1 };
+
+            // Gửi request đến server
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddToCart", "Cart")',
+                data: JSON.stringify(model),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    // Cập nhật số lượng sản phẩm trên giỏ hàng
+                    var cartCount = parseInt($('#CartCount').text()) || 0;
+                    $('#CartCount').text(cartCount + 1);
+
+                    // Hiển thị thông báo thành công
+                    alert("Sản phẩm '" + productName + "' đã được thêm vào giỏ hàng!");
+                },
+                error: function () {
+                        alert("Lỗi trong khi thêm sản phẩm vào giỏ hàng!");
+                    }
+                });
+
+            return false;
+        });
+    });
+</script>
+
+<!-- Start Content -->
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Danh mục sản phẩm</h1>
+            <ul class="list-inline shop-top-menu pb-3 pt-1">
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "" })"><i class="pull-right mdi mdi-dots-vertical"></i>Thương hiệu</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Apple Watch" })"><i class="pull-right mdi mdi-dots-vertical"></i>Apple Watch</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Samsung" })"><i class="pull-right mdi mdi-dots-vertical"></i>Samsung</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Huawie" })"><i class="pull-right mdi mdi-dots-vertical"></i>Huawei</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Xiaomi" })"><i class="pull-right mdi mdi-dots-vertical"></i>Xiaomi</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Asus" })"><i class="pull-right mdi mdi-dots-vertical"></i>Asus</a></li>
+                <li class="pb-3 nav-item"><a href="@Url.Action("Index", "ShoppingCart", new { area = "", category = "Garmin" })"><i class="pull-right mdi mdi-dots-vertical"></i>Garmin</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+
+                @using (Html.BeginForm("Index", "ShoppingCart", FormMethod.Get))
+                {
+                    <div class="col-md-6 pd-4">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" value="@ViewBag.Keyword" name="searchSmartWatch" placeholder="Tìm kiếm sản phẩm">
+                            <button type="submit" class="input-group-text bg-success text-light">
+                                <i class="fa fa-fw fa-search text-white"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="~/Content/Image/@item.Image">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        @*<li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>*@
+                                        <li><a class="btn btn-success text-white mt-2" href="@Url.Action("Details", "ShoppingCart", new { id = item.ProductID })"><i class="far fa-eye"></i></a></li>
+                                        <li>
+                                            <a class="btn btn-success text-white mt-2" href="#" id="addtocart_@item.ProductID" data-product-id="@item.ProductID" data-product-name="@item.ProductName">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="overflow:hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">
+                                    @item.ProductName
+                                </p>
+                                @*<a href="shop-single.html" class="h3 text-decoration-none">@item.ProductName</a>*@
+                                @*<p class="text-muted">Số lượng (@item.Quantity)</p>*@
+                                <p class="text-center mb-0" style="color: #198754; font-size: 1.875rem; font-weight: 500; ">@String.Format("{0:#,##0} VNĐ", item.Price).Replace(',', '.')</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            <div div="row">
+                <ul class="pagination justify-content-end">
+                    @if (Model.PageCount > 1)
+                    {
+                        if (Model.HasPreviousPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1 })"><<</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link"><<</span>
+                            </li>
+                        }
+
+                        for (int i = 1; i <= Model.PageCount; i++)
+                        {
+                            if (Model.PageNumber == i)
+                            {
+                                <li class="page-item active">
+                                    <span class="page-link">@i</span>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                                </li>
+                            }
+                        }
+
+                        if (Model.HasNextPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1 })">>></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <span class="page-link">>></span>
+                            </li>
+                        }
+                    }
+                </ul>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Content -->

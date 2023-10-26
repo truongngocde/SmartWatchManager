@@ -1,0 +1,46 @@
+﻿@model SmartWatchManager.Models.Customer
+<link rel="stylesheet" type="text/css" href="~/Content/assets/css/client.css">
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .btn-submit {
+        background: burlywood;
+        border-radius: 10px;
+        text-align: center;
+        margin: 24px;
+    }
+</style>
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+<div class="form-register">
+    <p class="register-title">ĐĂNG NHẬP</p>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group input-register">
+        @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group input-register">
+
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+    </div>
+    <span style=" margin-left: 60px; color: #ff0000">@ViewBag.error</span>
+
+    <div style="float:right; margin-right:60px">Bạn chưa có tài khoản! <a href="/Home/Register" style="color: #59ab6e;">Đăng ký</a></div>
+
+    <div class="form-group input-register">
+        <div class="btn-submit">
+            <input type="submit" value="Đăng nhập" class="btn" style="width: 100% !important;" />
+        </div>
+    </div>
+
+</div>
+}
+
+

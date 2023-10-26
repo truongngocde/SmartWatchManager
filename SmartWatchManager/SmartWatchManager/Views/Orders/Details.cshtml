@@ -1,0 +1,111 @@
+﻿@model SmartWatchManager.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipperDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipperDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatu.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatu.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+        
+
+        <!-- Hiển thị thông tin hóa đơn -->
+        <h2>Thông tin hóa đơn</h2>
+        <p>ID: @Model.OrderName</p>
+        <p>Tên: @Model.Customer.FullName</p>
+        <p>Khách hàng ID: @Model.CustomerID</p>
+        <p>Ngày đặt hàng: @Model.OrderDate</p>
+        <p>Trạng thái: @Model.OrderStatu.Name</p>
+
+        <!-- Hiển thị danh sách sản phẩm -->
+        <h2>Danh sách sản phẩm</h2>
+        @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Tổng giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var orderDetail in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>@orderDetail.ID</td>
+                            <td>@orderDetail.SmartWatch.ProductName</td>
+                            <td>@orderDetail.Quantity</td>
+                            <td>@orderDetail.SmartWatch.Price</td>
+                            <td>@(orderDetail.Quantity * orderDetail.SmartWatch.Price)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Không có sản phẩm trong đơn hàng.</p>
+        }
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
