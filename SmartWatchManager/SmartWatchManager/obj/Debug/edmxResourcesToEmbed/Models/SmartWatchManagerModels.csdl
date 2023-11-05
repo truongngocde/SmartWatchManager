@@ -87,6 +87,7 @@
     <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Category" Relationship="Self.FK_SmartWatch_Category" FromRole="SmartWatch" ToRole="Category" />
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_SmartWatch" FromRole="SmartWatch" ToRole="OrderDetail" />
+    <NavigationProperty Name="AdminNotifications" Relationship="SmartWatchManagerModel.FK_AdminNotifications_SmartWatch" FromRole="SmartWatch" ToRole="AdminNotification" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -225,5 +226,83 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="AdminNotifications" EntityType="SmartWatchManagerModel.AdminNotification" />
+    <EntitySet Name="sysdiagrams" EntityType="SmartWatchManagerModel.sysdiagram" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SmartWatchManagerModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SmartWatchManagerModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="FK_AdminNotifications_SmartWatch" Association="SmartWatchManagerModel.FK_AdminNotifications_SmartWatch">
+      <End Role="SmartWatch" EntitySet="SmartWatches" />
+      <End Role="AdminNotification" EntitySet="AdminNotifications" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="AdminNotification">
+    <Key>
+      <PropertyRef Name="NotificationID" />
+    </Key>
+    <Property Name="NotificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="SmartWatch" Relationship="SmartWatchManagerModel.FK_AdminNotifications_SmartWatch" FromRole="AdminNotification" ToRole="SmartWatch" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_AdminNotifications_SmartWatch">
+    <End Type="SmartWatchManagerModel.SmartWatch" Role="SmartWatch" Multiplicity="0..1" />
+    <End Type="SmartWatchManagerModel.AdminNotification" Role="AdminNotification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SmartWatch">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="AdminNotification">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

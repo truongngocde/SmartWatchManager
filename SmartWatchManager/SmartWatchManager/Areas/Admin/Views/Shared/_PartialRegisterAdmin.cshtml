@@ -47,6 +47,7 @@
             <p class="p-3 mb-0 text-center">4 new messages</p>
         </div>
     </li>
+
     <li class="nav-item dropdown border-left">
         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
             <i class="mdi mdi-bell"></i>
@@ -62,8 +63,8 @@
                     </div>
                 </div>
                 <div class="preview-item-content">
-                    <p class="preview-subject mb-1">Event today</p>
-                    <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
+                    <p class="preview-subject mb-1"></p>
+                    <p class="text-muted ellipsis mb-0"> </p>
                 </div>
             </a>
             <div class="dropdown-divider"></div>
@@ -116,7 +117,7 @@
                 </div>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item"  href="@Url.Action("Index", "Home", new { area = "" })">
+            <a class="dropdown-item preview-item" href="@Url.Action("Index", "Home", new { area = "" })">
                 <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>

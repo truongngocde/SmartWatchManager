@@ -1,5 +1,5 @@
-- Đảm bảo giá tiền của đồng hồ không âm
-- Khi cập nhật số lượng đồng hồ trong kho , trigger ghi lại thông tin veef người dùng thực hiện thay đổi và thời gian cập nhật
+- Đảm bảo giá tiền của đồng hồ không âm. 👌
+- Khi cập nhật số lượng đồng hồ trong kho , trigger ghi lại thông tin về người dùng thực hiện thay đổi và thời gian cập nhật. 👌
 - Tính tổng số lượng đồng hồ còn trong kho dựa trên các giao dịch nhập và xuất.
 - Gửi email hoặc thông báo đến người quản trị khi số lượng đồng hồ còn trong kho dưới 1 ngưỡng nhất định .
 - Khách hàng đặt hàng trực tuyến , tạo 1 phiếu đặt hàng tự động trong  cơ sở dữ liệu.

@@ -10,12 +10,14 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using Fluent.Infrastructure.FluentModel;
 
 namespace SmartWatchManager.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
         SmartWatchManagerEntity db = new SmartWatchManagerEntity();
+        
         // GET: Admin/Home
         public ActionResult Index()
         {
@@ -108,6 +110,13 @@ namespace SmartWatchManager.Areas.Admin.Controllers
             }
             return byte2String;
         }
+        
+        public PartialViewResult NotificationsPartial()
+        {
+            var notifications = db.AdminNotifications.ToList();
+            return PartialView("_PartialRegisterAdmin", notifications);
+        }
+
         public ActionResult Logout()
         {
             Session.Clear();
