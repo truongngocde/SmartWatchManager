@@ -1,4 +1,4 @@
-﻿
+﻿@model List<SmartWatchManager.Models.AdminNotification>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -30,14 +30,14 @@
                 <div class="row">
                     <div class="col-8 col-sm-12 col-xl-8 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                            
+
                             <a style="text-decoration: none; font-size: 32px; color: #fff" href="@Url.Action("Index", "Orders")">Đơn hàng</a>
-                            
+
                         </div>
                         <h6 class="text-muted font-weight-normal"></h6>
                     </div>
                     <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        
+
                         <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
                     </div>
                 </div>
@@ -64,7 +64,62 @@
             </div>
         </div>
     </div>
+
+    
 </div>
+
+
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Các sản phẩm sắp hết hàng</h4>
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-bordered table-contextual">
+                        <thead>
+                            <tr>
+                                <th> STT </th>
+                                <th> Tên sản phẩm </th>
+                                <th> Số lượng </th>
+                            </tr>
+                        </thead>
+                        <tbody style="max-height: 50vh !important; overflow-y: auto !important">
+                            @foreach (var notification in Model)
+                            {
+                                
+                                <tr>
+                                    
+                                    <td>@notification.SmartWatch.ProductName</td>
+                                    <td>@notification.Quantity</td>
+                                    
+                                </tr>                             
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <a href="@Url.Action("RegisterAdmin", "Home", new { area = "Admin"})" class="btn btn-success btn-fw" style="margin-top: 24px">Đăng kí tài khoản</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // JavaScript để đánh số thứ tự cho các hàng
+    const table = document.getElementById("myTable");
+    const rows = table.getElementsByTagName("tr");
+
+    // Bắt đầu từ số 1, vì hàng đầu tiên là tiêu đề
+    let rowIndex = 1;
+
+    // Duyệt qua các hàng, bắt đầu từ hàng thứ hai (index 1)
+    for (let i = 1; i < rows.length; i++) {
+      const cell = rows[i].insertCell(0);
+      cell.textContent = rowIndex;
+      rowIndex++;
+    }
+</script>
 
 
 

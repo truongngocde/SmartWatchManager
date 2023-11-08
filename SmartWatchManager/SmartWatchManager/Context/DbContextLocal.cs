@@ -10,6 +10,7 @@
 
 using System.Data.Entity;
 using Fluent.Infrastructure.FluentDBContext;
+using Microsoft.Ajax.Utilities;
 using SmartWatchManager.Models;
 
 namespace SmartWatchManager.DataBase 
@@ -18,6 +19,6 @@ namespace SmartWatchManager.DataBase
     {
         public DbContextLocal() : base(@"Data Source=.\SQLEXPRESS;Initial Catalog=SmartWatchManager; Integrated Security = true;") { }
 
-        public DbSet<Forum> Forum { get; set; }
+        public DbSet<ForIn> Forum { get; set; }
     }
 }

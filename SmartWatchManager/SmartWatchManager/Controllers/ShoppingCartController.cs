@@ -16,24 +16,6 @@ namespace SmartWatchManager.Controllers
         private SmartWatchManagerEntity db = new SmartWatchManagerEntity();
 
         // GET: ShoppingCart
-        /*public ActionResult Index(int? page, string category, SmartWatch smart)
-        {
-            IQueryable<SmartWatch> smartWatches = db.SmartWatches.Include(s => s.Category);
-            
-            if (!String.IsNullOrEmpty(category))
-            {
-                category = category.ToLower();
-                smartWatches = smartWatches.Where(b => b.Category.CategoryName.ToLower().Contains(category));
-            }
-
-            // Phân trang
-            smartWatches = smartWatches.OrderBy(b => b.ProductID);
-            if (page == null) { page = 1; }
-            int pageSize = 9;
-            int pageNumber = (page ?? 1);
-
-            return View(smartWatches.ToPagedList(pageNumber, pageSize));
-        }*/
         public ActionResult Index(int? page, string searchSmartWatch, string category)
         {
             // Tìm Kiếm            

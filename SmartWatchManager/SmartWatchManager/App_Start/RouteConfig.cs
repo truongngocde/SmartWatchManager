@@ -19,6 +19,12 @@ namespace SmartWatchManager
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "SmartWatchManager.Controllers" }
             );
+            routes.MapRoute(
+                name: "DeleteOrder",
+                url: "SmartWatchManager/Delete/{id}",
+                defaults: new { controller = "SmartWatchManager", action = "Delete" }
+            );
+
         }
     }
 }

@@ -21,8 +21,10 @@ namespace SmartWatchManager.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-            var listCategory = db.Categories.ToList();
-            return View(listCategory);
+            var notifications = db.AdminNotifications.ToList();
+
+            return View(notifications);
+            
         }
         
         public ActionResult RegisterAdmin()
@@ -110,12 +112,32 @@ namespace SmartWatchManager.Areas.Admin.Controllers
             }
             return byte2String;
         }
-        
-        public PartialViewResult NotificationsPartial()
+
+        /*public ActionResult GetProducts()
         {
-            var notifications = db.AdminNotifications.ToList();
-            return PartialView("_PartialRegisterAdmin", notifications);
+            
+            List<AdminNotification> notifications = db.AdminNotifications.ToList();
+            // Lấy thông tin productName từ bảng SmartWatch
+            var productNames = notifications.Select(n => n.SmartWatch.ProductName).ToList();
+
+            // Tạo một danh sách mới chứa dữ liệu bạn muốn truyền vào view
+            var productNamesList = productNames.ToList();
+
+            // Lưu danh sách vào Session
+            Session["ProductNames"] = productNamesList;
+
+            return View(productNamesList);
+        }*/
+        public ActionResult GetProducts()
+        {
+            List<AdminNotification> notifications = db.AdminNotifications.ToList();
+
+            return View(notifications); // Truyền danh sách AdminNotification vào view
         }
+
+
+
+
 
         public ActionResult Logout()
         {

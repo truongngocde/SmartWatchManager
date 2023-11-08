@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Castle.Core.Resource;
 using SmartWatchManager.Models;
 
 namespace SmartWatchManager.Controllers
@@ -17,116 +18,74 @@ namespace SmartWatchManager.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.OrderStatu).Include(o => o.User);
-            return View(orders.ToList());
+            var customerID = (int?)Session["CustomerID"];
+            var purchaseHistory = (from s in db.SmartWatches
+                                   join od in db.OrderDetails on s.ProductID equals od.ProductID
+                                   join o in db.Orders on od.OrderID equals o.OrderID
+                                   where o.CustomerID == customerID
+                                   select new BillOrder
+                                   {
+                                       OrderID = o.OrderID,
+                                       OrderName = o.OrderName,
+                                       ProductName = s.ProductName,
+                                       Quantity = (int)od.Quantity,
+                                       OrderDate = (DateTime)o.OrderDate,
+                                       TotalPrice = (decimal)od.TotalPrice,
+                                   }).ToList();
+
+            return View(purchaseHistory);
         }
 
-        // GET: Orders/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Orders.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
+            // Tìm đơn hàng cần xóa dựa trên id
+            var purchase = db.OrderDetails
+                .Where(od => od.OrderID == id)
+                .Select(od => new BillOrder
+                {
+                    OrderID = od.Order.OrderID,
+                    OrderName = od.Order.OrderName,
+                    ProductName = od.SmartWatch.ProductName,
+                    Quantity = (int)od.Quantity,
+                    OrderDate = (DateTime)od.Order.OrderDate,
+                    TotalPrice = (decimal)od.TotalPrice,
+                })
+                .FirstOrDefault();
 
-        // GET: Orders/Create
-        public ActionResult Create()
-        {
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "FullName");
-            ViewBag.StatusID = new SelectList(db.OrderStatus, "StatusID", "Name");
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
-            return View();
-        }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderID,OrderName,CustomerID,UserID,OrderDate,ShipperDate,StatusID")] Order order)
-        {
-            if (ModelState.IsValid)
+            if (purchase == null)
             {
-                db.Orders.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return HttpNotFound(); // Trả về 404 Not Found nếu không tìm thấy đơn hàng
             }
 
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "FullName", order.CustomerID);
-            ViewBag.StatusID = new SelectList(db.OrderStatus, "StatusID", "Name", order.StatusID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", order.UserID);
-            return View(order);
+            return View(purchase);
         }
 
-        // GET: Orders/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Orders.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "FullName", order.CustomerID);
-            ViewBag.StatusID = new SelectList(db.OrderStatus, "StatusID", "Name", order.StatusID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", order.UserID);
-            return View(order);
-        }
 
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderID,OrderName,CustomerID,UserID,OrderDate,ShipperDate,StatusID")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "FullName", order.CustomerID);
-            ViewBag.StatusID = new SelectList(db.OrderStatus, "StatusID", "Name", order.StatusID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", order.UserID);
-            return View(order);
-        }
+        //// GET: Orders/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Order order = db.Orders.Find(id);
+        //    if (order == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(order);
+        //}
 
-        // GET: Orders/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Orders.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Orders/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Order order = db.Orders.Find(id);
+        //    db.Orders.Remove(order);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
